@@ -1,38 +1,48 @@
-Controle de Estacionamento - A3
+# Gerenciamento de Veículos - Sistemas Distribuídos
 
-Aplicação distribuída para gestão de veículos utilizando **Python (Flask)**, **PostgreSQL** e **Frontend Web (HTML/JS)**.
+Este projeto consiste em uma aplicação distribuída para o controle de veículos, composta por um backend em Python (Flask), um frontend web e persistência em banco de dados PostgreSQL.
 
-Passo a Passo para Rodar
+## 🚀 Como Executar o Projeto
 
-### 1. Banco de Dados (PostgreSQL)
-* Crie um banco de dados chamado `veiculos_db`.
-* No arquivo `backend/.env`, atualize a senha do seu usuário `postgres`:
-  ```env
-  DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/veiculos_db
-  ```
+### 1. Pré-requisitos
+*   **Python 3.x** instalado.
+*   **PostgreSQL** instalado e rodando.
+*   **Postman** (opcional, para testes da API).
 
-### 2. Backend (API)
-Abra o terminal na pasta raiz e execute:
-```bash
-# Entrar na pasta
-cd backend
-
-# Instalar dependências
-pip install -r requirements.txt
-
-# Iniciar o servidor
-python app.py
+### 2. Configuração do Banco de Dados
+Crie um banco de dados no seu PostgreSQL local:
+```sql
+CREATE DATABASE veiculos_db;
 ```
-> O servidor rodará em `http://localhost:5000`. As tabelas são criadas automaticamente no primeiro acesso.
 
-### 3. Frontend (Interface)
-1. Navegue até a pasta `frontend`.
-2. Abra o arquivo `index.html` em qualquer navegador.
+### 3. Configuração do Ambiente (.env)
+Dentro da pasta `backend/`, crie um arquivo chamado `.env` e adicione a sua URL de conexão. Exemplo:
+```env
+DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/veiculos_db
+```
+*(Substitua `SUA_SENHA` pela senha do seu usuário `postgres`)*
+
+### 4. Instalação de Dependências
+Abra o terminal na raiz do projeto e execute:
+```bash
+pip install -r backend/requirements.txt
+```
+
+### 5. Execução do Backend
+Inicie o servidor Flask:
+```bash
+python backend/app.py
+```
+O servidor rodará em `http://localhost:5000`. O banco de dados e as tabelas são inicializados automaticamente.
+
+### 6. Acesso ao Frontend
+Basta abrir o arquivo `frontend/index.html` em qualquer navegador moderno.
 
 ---
 
-## 🛠️ Tecnologias
-* **Backend:** Flask, Flask-SQLAlchemy, Flask-CORS.
-* **Banco:** PostgreSQL.
-* **Frontend:** HTML5, CSS3, JavaScript.
-* **Testes:** Postman (coleção disponível na pasta `/postman`).
+## 🛠️ Tecnologias Utilizadas
+*   **Backend:** Flask, Flask-SQLAlchemy, Flask-CORS.
+*   **Banco de Dados:** PostgreSQL.
+*   **Frontend:** HTML5, CSS3, JavaScript (Fetch API).
+*   **Testes:** Postman (coleções disponíveis na pasta `/postman` e `/backend`).
+

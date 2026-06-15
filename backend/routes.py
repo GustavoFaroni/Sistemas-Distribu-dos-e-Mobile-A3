@@ -4,52 +4,52 @@ from models import db, Veiculo
 api_blueprint = Blueprint('api', __name__)
 
 @api_blueprint.route('/veiculos', methods=['POST'])
-def create_veiculo():
-    data = request.get_json()
+def criar_veiculo():
+    dados = request.get_json()
     
-    if not all(k in data for k in ('marca', 'modelo', 'ano', 'placa', 'cor')):
-        return jsonify({'error': 'Missing required fields'}), 400
+    campos_obrigatorios = ('marca', 'modelo', 'ano', 'placa', 'cor')
+    if not all(k in dados for k in campos_obrigatorios):
+        return jsonify({'error': 'Campos obrigatórios ausentes'}), 400
     
-    # Check if placa already exists
-    if Veiculo.query.filter_by(placa=data['placa']).first():
+    if Veiculo.query.filter_by(placa=dados['placa']).first():
         return jsonify({'error': 'Veículo com esta placa já existe'}), 400
 
-    new_veiculo = Veiculo(
-        marca=data['marca'],
-        modelo=data['modelo'],
-        ano=data['ano'],
-        placa=data['placa'],
-        cor=data['cor']
+    novo_veiculo = Veiculo(
+        marca=dados['marca'],
+        modelo=dados['modelo'],
+        ano=dados['ano'],
+        placa=dados['placa'],
+        cor=dados['cor']
     )
     
     try:
-        db.session.add(new_veiculo)
+        db.session.add(novo_veiculo)
         db.session.commit()
-        return jsonify(new_veiculo.to_dict()), 201
+        return jsonify(novo_veiculo.to_dict()), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
 @api_blueprint.route('/veiculos', methods=['GET'])
-def get_veiculos():
+def listar_veiculos():
     veiculos = Veiculo.query.all()
     return jsonify([v.to_dict() for v in veiculos]), 200
 
 @api_blueprint.route('/veiculos/<int:id>', methods=['GET'])
-def get_veiculo(id):
+def buscar_veiculo(id):
     veiculo = Veiculo.query.get_or_404(id)
     return jsonify(veiculo.to_dict()), 200
 
 @api_blueprint.route('/veiculos/<int:id>', methods=['PUT'])
-def update_veiculo(id):
+def atualizar_veiculo(id):
     veiculo = Veiculo.query.get_or_404(id)
-    data = request.get_json()
+    dados = request.get_json()
 
-    veiculo.marca = data.get('marca', veiculo.marca)
-    veiculo.modelo = data.get('modelo', veiculo.modelo)
-    veiculo.ano = data.get('ano', veiculo.ano)
-    veiculo.placa = data.get('placa', veiculo.placa)
-    veiculo.cor = data.get('cor', veiculo.cor)
+    veiculo.marca = dados.get('marca', veiculo.marca)
+    veiculo.modelo = dados.get('modelo', veiculo.modelo)
+    veiculo.ano = dados.get('ano', veiculo.ano)
+    veiculo.placa = dados.get('placa', veiculo.placa)
+    veiculo.cor = dados.get('cor', veiculo.cor)
 
     try:
         db.session.commit()
@@ -59,7 +59,7 @@ def update_veiculo(id):
         return jsonify({'error': str(e)}), 500
 
 @api_blueprint.route('/veiculos/<int:id>', methods=['DELETE'])
-def delete_veiculo(id):
+def remover_veiculo(id):
     veiculo = Veiculo.query.get_or_404(id)
     try:
         db.session.delete(veiculo)
