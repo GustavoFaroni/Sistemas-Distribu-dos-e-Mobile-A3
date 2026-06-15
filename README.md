@@ -5,7 +5,7 @@ Este projeto consiste em uma aplicação distribuída para o controle de veícul
 ## 🚀 Como Executar o Projeto
 
 ### 1. Pré-requisitos
-*   **Python 3.x** instalado.
+*   **Python 3** instalado.
 *   **PostgreSQL** instalado e rodando.
 *   **Postman** (opcional, para testes da API).
 
